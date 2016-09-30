@@ -2,13 +2,15 @@
 import os
 import glob
 
-# ディレクトリが存在しない場合のみ作成
+# ディレクトリの存在の確認し，
+# 存在しなければディレクトリ作成
+# -pオプションでまとめてディレクトリ作成
 def make_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
 # ディレクトリ名を正しく直す
-# 'hoge/hoge' to 'hoge/hoge/'
+# 'hoge/hoge' => 'hoge/hoge/'
 def correct_dir_path(path):
     path_sp = path.split('/')
     if path_sp[-1] == '':
@@ -16,21 +18,24 @@ def correct_dir_path(path):
     return path + '/'
 
 # アルファベット大文字を数字に
-# Aから0,1...
-# 'A' to 0
+# A => 0, B => 1, ..., Z => 26
 def a2n(alph):
     return ord(alph) - 65
 
-# 文字列リストを連結して返す
+# リストの要素をパスの形式にして返す
+# ['foo', 'bar'] => 'foo/bar/'
 def list2path(ls):
     st = ''
     for l in ls:
         st += str(l) + '/'
-    print st
     return st
 
 # 連番ディレクトリ作成
 # 作成したディレクトリのパスを返す
+# if 'foo/bar?/'が存在しない
+#   'foo/bar/' => 'foo/bar0/'を作成，パスを返す
+# if 'foo/bar0/'が存在
+#   'foo/bar' => 'foo/bar1'を作成，パスを返す
 def make_num_dir(path):
     cor_path = correct_dir_path(path)
     cor_path_sp = cor_path.split('/')
@@ -48,17 +53,22 @@ def make_num_dir(path):
             break
     return num_path
 
-# アルファベット軍の配列を作成
+# アルファベット大文字の配列を作成
+# => [A, B, ..., Z]
 def make_alphabets():
     alphs = [chr(i + 65) for i in xrange(26)]
     return alphs
 
 # パスのディレクトリ内のファイルのパスを取得
+# findnameでワイルドカード検索可能
+# 'foo/bar/', '*.png' => 'foo/bar/'内のpng画像のパスのリストを返す
 def get_filepaths(dirpath, findname):
     cor_dirpath = correct_dir_path(dirpath)
     filepaths = glob.glob(cor_dirpath + findname)
     return filepaths
 
+# ファイル名リストにadditionを追加して返す
+# 'foo.png', '_bar' => 'foo_bar.png'
 def set_filepaths(filepaths, addition):
     added_filepaths = []
     for path in filepaths:
@@ -70,6 +80,9 @@ def set_filepaths(filepaths, addition):
         added_filepaths.append(added_path)
     return added_filepaths
 
+# ファイル名にadditionsリストの順番通り追加して返す
+# ['foo.png', 'bar.png'], ['_A', '_B']
+#   => ['foo_A.png', 'bar_B.png']
 def set_special_filepaths(filepaths, additions):
     added_filepaths = []
     for (path, addition) in zip(filepaths, additions):
