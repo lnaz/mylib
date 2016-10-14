@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import cv2
+import os
 
 def display_img(img):
     cv2.imshow('img', img)
@@ -21,3 +22,14 @@ def write_imgs(imgs, filepaths):
     for img, path in zip(imgs, filepaths):
         cv2.imwrite(path, img)
 
+def img_paths_to_mats(dir_path, head='', ext='png'):
+    imgs = []
+    i = 0
+    while(1):
+        path = dir_path + head + str(i) + '.' + ext
+        if not os.path.isfile(path):
+            break
+        img = cv2.imread(path, -1)
+        imgs.append(img)
+        i += 1
+    return imgs

@@ -8,6 +8,7 @@ import glob
 def make_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
+    return path
 
 # ディレクトリ名を正しく直す
 # 'hoge/hoge' => 'hoge/hoge/'
