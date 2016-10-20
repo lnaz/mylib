@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 from keras import backend as K
-from keras_ex import predict
-from networks import lenet
+# from networks import lenet
+from mylib.keras import predict
 import numpy as np
 import cv2
 from mylib.tools import *
@@ -15,6 +15,7 @@ def convert_intermediate_to_img(layer_np, range_num):
 
 def get_intermediate_layer(img, model, layer_num):
     img_np = predict.mat_to_np(mat=img)
+    print (img_np.shape)
     get_layer_output = K.function([model.layers[0].input], [model.layers[layer_num].output])
     layer_output = get_layer_output([img_np])[0]
     return layer_output[0]

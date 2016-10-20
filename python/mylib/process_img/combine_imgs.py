@@ -8,17 +8,17 @@ from mylib.cv2_tools import *
 
 def combine_imgs(imgs, width):
     if len(imgs) % width == 0:
-        height = len(imgs) / width
+        height = int(len(imgs) / width)
     else:
-        height = len(imgs) / width + 1
+        height = int(len(imgs) / width + 1)
 
     img_size = imgs[0].shape
 
     white_img = np.zeros(img_size, dtype=np.uint8)
     white_img.fill(255)
 
-    for row_i in xrange(height):
-        for col_i in xrange(width):
+    for row_i in range(height):
+        for col_i in range(width):
             if col_i == 0:
                 combined_row_img = imgs.pop(0)
                 continue

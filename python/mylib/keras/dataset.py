@@ -28,11 +28,12 @@ def filelist_to_list(filename):
         image_list.append(img.flatten().astype(np.float32)/255.0)
         label_list.append(int(readline_sp[1]))
     file.close()
+    pic_size = img.shape
     print('converting into numpy format...')
     image_list = np.asarray(image_list)
     label_list = np.asarray(label_list)
     print('reshaping...')
-    image_list = image_list.reshape((image_list.shape[0], 200, 200))
+    image_list = image_list.reshape((image_list.shape[0], pic_size[0], pic_size[1]))
     print('adding new shape...')
     image_list = image_list[:, np.newaxis, :, :]
     print('converting 1-of-k format...')

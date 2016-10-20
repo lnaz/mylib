@@ -4,13 +4,13 @@ from operator import itemgetter
 import sys
 import cv2
 import numpy as np
-from networks import lenet
+# from networks import lenet
 from mylib.tools import *
 
 def mat_to_np(mat):
     img = mat.flatten().astype(np.float32)/255.0
     img = np.asarray(img)
-    img = img.reshape((200, 200))
+    img = img.reshape(mat.shape)
     img = img[np.newaxis, np.newaxis, :, :]
     return img
 
