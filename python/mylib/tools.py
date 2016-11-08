@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import glob
+from datetime import datetime
 
 # ディレクトリの存在の確認し，
 # 存在しなければディレクトリ作成
@@ -33,7 +34,7 @@ def list2path(ls):
 
 # 連番ディレクトリ作成
 # 作成したディレクトリのパスを返す
-# if 'foo/bar?/'が存在しない
+# if 'foo/bar0/'が存在しない
 #   'foo/bar/' => 'foo/bar0/'を作成，パスを返す
 # if 'foo/bar0/'が存在
 #   'foo/bar' => 'foo/bar1'を作成，パスを返す
@@ -54,10 +55,24 @@ def make_num_dir(path):
             break
     return num_path
 
+def make_date_dir(path):
+    cor_path = correct_dir_path(path)
+    cor_path_sp = cor_path.split('/')
+    dir_name = cor_path_sp[-2]
+    del cor_path_sp[-2:]
+    date_path_list = cor_path_sp[:]
+    now_str = datetime.now().strftime('%Y%m%d%H%M%S')
+    date_path_list.append(dir_name + '_' + now_str)
+    date_path = list2path(date_path_list)
+    os.makedirs(date_path)
+    return date_path
+
+    
+
 # アルファベット大文字の配列を作成
 # => [A, B, ..., Z]
 def make_alphabets():
-    alphs = [chr(i + 65) for i in xrange(26)]
+    alphs = [chr(i + 65) for i in range(26)]
     return alphs
 
 # パスのディレクトリ内のファイルのパスを取得
