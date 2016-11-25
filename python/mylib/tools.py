@@ -135,3 +135,25 @@ def set_special_filepaths(filepaths, additions):
         added_path += ext
         added_filepaths.append(added_path)
     return added_filepaths
+
+
+def get_vars_name(var, symboltable, error=None):
+    '''
+    変数の名前を取得
+    http://qiita.com/yuu116atlab/items/154ac83c03de233bf9fb
+    '''
+    for k, v in symboltable.items():
+        if id(v) == id(var):
+            return k
+    else:
+        if error == 'exception':
+            raise ValueError('Undefined functions is mixed in subspace?')
+        else:
+            return error
+
+def get_vars_names(vars, symboltable):
+    '''
+    変数(複数)の名前を取得
+    http://qiita.com/yuu116atlab/items/154ac83c03de233bf9fb
+    '''
+    return [get_vars_name(var, symboltable) for var in vars]

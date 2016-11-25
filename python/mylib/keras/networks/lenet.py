@@ -30,3 +30,27 @@ class LeNet:
         if weight_path is not None:
             model.load_weights(weight_path)
         return model
+
+class LeNet2:
+    @staticmethod
+    def build(width, height, depth, classes, weight_path=None):
+        # モデル初期化
+        model = Sequential()
+        # first set of CONV => RELU => POOL
+        model.add(Convolution2D(32, 3, 3, border_mode='same', input_shape=(depth, height, width)))
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        # second set of CONV => RELU => POOL
+        model.add(Convolution2D(32, 3, 3, border_mode='same'))
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        # set of FC => RELU layers
+        model.add(Flatten())
+        model.add(Dense(500))
+        model.add(Activation('relu'))
+        # softmax clasifier
+        model.add(Dense(classes))
+        model.add(Activation('softmax'))
+        if weight_path is not None:
+            model.load_weights(weight_path)
+        return model
