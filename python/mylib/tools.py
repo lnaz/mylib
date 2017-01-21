@@ -151,9 +151,23 @@ def get_vars_name(var, symboltable, error=None):
         else:
             return error
 
-def get_vars_names(vars, symboltable):
+
+def get_vars_names(vars, symboltable=locals()):
     '''
     変数(複数)の名前を取得
     http://qiita.com/yuu116atlab/items/154ac83c03de233bf9fb
     '''
     return [get_vars_name(var, symboltable) for var in vars]
+
+
+def save_vars_log_file(var_names, var_values, dst_txt_path): 
+    with open(dst_txt_path, 'w') as log_file:
+        for name, value in zip(var_names, var_values):
+            tmp = name + '=' + str(value) + '\n'
+            log_file.write(tmp)
+
+
+def save_text_log_file(text, dst_txt_path):
+    with open(dst_txt_path, 'a') as log_file:
+        log_file.write(text)
+
