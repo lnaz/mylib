@@ -28,6 +28,11 @@ def save_model(model, output_hdf_path):
     print('saving...')
     model.save_weights(output_hdf_path, overwrite=True)
 
+def save_model_json(model, output_json_path):
+    json_str = model.to_json()
+    with open('output_json_path', 'w') as file:
+        file.write(json_str)
+
 def user_input():
     ap = argparse.ArgumentParser()
     ap.add_argument('train_txt_path', type=str, help='train.txt')
